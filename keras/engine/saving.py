@@ -87,6 +87,13 @@ def _serialize_model(model, h5dict, include_optimizer=True):
         # if obj is a python 'type'
         if type(obj).__name__ == type.__name__:
             return obj.__name__
+        
+        # If it is a tf.Dimension
+        try:
+            obj = int(obj)
+            return obj
+        except TypeError:
+            pass
 
         raise TypeError('Not JSON Serializable: %s' % (obj,))
 
